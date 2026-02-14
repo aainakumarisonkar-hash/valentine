@@ -14,6 +14,8 @@ body {
 
 .container {
     margin-top: 120px;
+    position: relative;
+    z-index: 2;
 }
 
 h1 {
@@ -24,7 +26,7 @@ h1 {
 button {
     padding: 15px 30px;
     margin: 20px;
-    font-size: 18px;
+    font-size: 20px;
     border-radius: 30px;
     border: none;
     cursor: pointer;
@@ -53,12 +55,12 @@ button {
     border-radius: 12px;
 }
 
-.heart {
+.floating, .confetti {
     position: absolute;
-    animation: float 6s linear infinite;
+    animation: floatUp 6s linear infinite;
 }
 
-@keyframes float {
+@keyframes floatUp {
     0% { transform: translateY(100vh); opacity: 1; }
     100% { transform: translateY(-10vh); opacity: 0; }
 }
@@ -74,9 +76,14 @@ button {
     <div id="message"></div>
 </div>
 
+<audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_9f9e5d67c6.mp3" type="audio/mpeg">
+</audio>
+
 <script>
 let noCount = 0;
 let yesScale = 1;
+let musicStarted = false;
 
 const memes = [
     "https://i.imgflip.com/30b1gx.jpg",
@@ -85,27 +92,36 @@ const memes = [
     "https://i.imgflip.com/4t0m5.jpg"
 ];
 
+function startMusic() {
+    if (!musicStarted) {
+        const music = document.getElementById("bgMusic");
+        music.volume = 0.2;
+        music.play();
+        musicStarted = true;
+    }
+}
+
 document.getElementById("noBtn").onclick = function() {
+    startMusic();
     noCount++;
     const msg = document.getElementById("message");
     const yesBtn = document.getElementById("yesBtn");
 
-    // Show meme
     let memeIndex = (noCount - 1) % memes.length;
 
     msg.innerHTML = `
-        <div>Tommy… are you serious right now? 😭</div>
+        <div>Tommy… are you sure about that? 😭</div>
         <div class="meme">
             <img src="${memes[memeIndex]}">
         </div>
     `;
 
-    // Make YES bigger
     yesScale += 0.3;
     yesBtn.style.transform = "scale(" + yesScale + ")";
 };
 
 document.getElementById("yesBtn").onclick = function() {
+    startMusic();
     document.getElementById("question").innerHTML =
         "YAYYYYY 💖 BEST DECISION EVER 💖";
     document.getElementById("message").innerHTML =
@@ -114,20 +130,20 @@ document.getElementById("yesBtn").onclick = function() {
     launchConfetti();
 };
 
-function createHearts(){
+function createFloatingHearts(){
     let heart = document.createElement("div");
-    heart.className = "heart";
+    heart.className = "floating";
     heart.innerHTML = "💗";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.fontSize = Math.random()*20 + 15 + "px";
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 6000);
 }
 
 function launchConfetti(){
-    for(let i=0; i<100; i++){
+    for(let i=0; i<120; i++){
         let conf = document.createElement("div");
-        conf.className = "heart";
+        conf.className = "confetti";
         conf.innerHTML = "💖";
         conf.style.left = Math.random()*100 + "vw";
         conf.style.fontSize = "22px";
@@ -136,7 +152,7 @@ function launchConfetti(){
     }
 }
 
-setInterval(createHearts, 300);
+setInterval(createFloatingHearts, 300);
 </script>
 
 </body>
