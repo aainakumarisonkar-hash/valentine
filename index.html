@@ -1,21 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tommy, Will You Be My Valentine? 💖</title>
-
-<!-- Confetti Library -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
 <style>
 body {
     margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
+    font-family: Arial, sans-serif;
     text-align: center;
     background: linear-gradient(135deg, #ffd6ec, #ffe6f2, #f3d9ff);
-    overflow: hidden;
 }
 
 .container {
@@ -23,24 +15,22 @@ body {
 }
 
 h1 {
-    font-size: 2.8em;
+    font-size: 2.5em;
     color: #ff4d94;
 }
 
 button {
-    padding: 15px 35px;
+    padding: 15px 30px;
     margin: 20px;
     font-size: 18px;
-    border-radius: 40px;
+    border-radius: 30px;
     border: none;
     cursor: pointer;
-    transition: 0.3s ease;
 }
 
 #yesBtn {
     background-color: #ff66b2;
     color: white;
-    box-shadow: 0 0 15px #ff99cc;
 }
 
 #noBtn {
@@ -48,15 +38,50 @@ button {
     color: white;
 }
 
-button:hover {
-    transform: scale(1.1);
-}
-
 #message {
-    font-size: 20px;
     margin-top: 20px;
+    font-size: 20px;
     color: #cc0066;
 }
+</style>
+</head>
 
-.meme {
-    margin-to
+<body>
+
+<div class="container">
+    <h1 id="question">Tommy 🥺, Will You Be My Valentine? 💖</h1>
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No ❌</button>
+    <div id="message"></div>
+</div>
+
+<script>
+let noCount = 0;
+
+document.getElementById("noBtn").onclick = function() {
+    noCount++;
+    let msg = document.getElementById("message");
+
+    if(noCount === 1){
+        msg.innerHTML = "Are you sure Tommy? 😏";
+    }
+    else if(noCount === 2){
+        msg.innerHTML = "Think carefully… 🤨";
+    }
+    else if(noCount === 3){
+        msg.innerHTML = "Rethink your life choices 😂";
+    }
+    else {
+        msg.innerHTML = "No button disabled. Press YES 💕";
+        document.getElementById("noBtn").style.display = "none";
+    }
+};
+
+document.getElementById("yesBtn").onclick = function() {
+    document.getElementById("question").innerHTML = "YAYYYYY 💖 BEST DECISION EVER 💖";
+    document.getElementById("message").innerHTML = "Tommy officially made the best decision 🎉💖";
+};
+</script>
+
+</body>
+</html>
