@@ -14,8 +14,6 @@ body {
 
 .container {
     margin-top: 120px;
-    position: relative;
-    z-index: 2;
 }
 
 h1 {
@@ -52,7 +50,7 @@ button {
 .meme img {
     margin-top: 15px;
     width: 250px;
-    border-radius: 10px;
+    border-radius: 12px;
 }
 
 .heart {
@@ -78,7 +76,7 @@ button {
 
 <script>
 let noCount = 0;
-let yesSize = 18;
+let yesScale = 1;
 
 const memes = [
     "https://i.imgflip.com/30b1gx.jpg",
@@ -92,24 +90,27 @@ document.getElementById("noBtn").onclick = function() {
     const msg = document.getElementById("message");
     const yesBtn = document.getElementById("yesBtn");
 
+    // Show meme
     let memeIndex = (noCount - 1) % memes.length;
 
     msg.innerHTML = `
-        <div>Tommy… really? 😭</div>
+        <div>Tommy… are you serious right now? 😭</div>
         <div class="meme">
             <img src="${memes[memeIndex]}">
         </div>
     `;
 
-    // Make YES bigger every time
-    yesSize += 10;
-    yesBtn.style.fontSize = yesSize + "px";
-    yesBtn.style.padding = (yesSize + 10) + "px " + (yesSize + 20) + "px";
+    // Make YES bigger
+    yesScale += 0.3;
+    yesBtn.style.transform = "scale(" + yesScale + ")";
 };
 
 document.getElementById("yesBtn").onclick = function() {
-    document.getElementById("question").innerHTML = "YAYYYYY 💖 BEST DECISION EVER 💖";
-    document.getElementById("message").innerHTML = "Tommy officially made the best decision 🎉💖";
+    document.getElementById("question").innerHTML =
+        "YAYYYYY 💖 BEST DECISION EVER 💖";
+    document.getElementById("message").innerHTML =
+        "Tommy officially made the best decision of his life 🎉💖";
+
     launchConfetti();
 };
 
@@ -124,12 +125,12 @@ function createHearts(){
 }
 
 function launchConfetti(){
-    for(let i=0; i<80; i++){
+    for(let i=0; i<100; i++){
         let conf = document.createElement("div");
         conf.className = "heart";
         conf.innerHTML = "💖";
         conf.style.left = Math.random()*100 + "vw";
-        conf.style.fontSize = "20px";
+        conf.style.fontSize = "22px";
         document.body.appendChild(conf);
         setTimeout(() => conf.remove(), 4000);
     }
