@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tommy, Will You Be My Valentine? 💖</title>
+
+<!-- Confetti Library -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    background: linear-gradient(135deg, #ffd6ec, #ffe6f2, #f3d9ff);
+    overflow: hidden;
+}
+
+.container {
+    margin-top: 120px;
+}
+
+h1 {
+    font-size: 2.8em;
+    color: #ff4d94;
+}
+
+button {
+    padding: 15px 35px;
+    margin: 20px;
+    font-size: 18px;
+    border-radius: 40px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#yesBtn {
+    background-color: #ff66b2;
+    color: white;
+    box-shadow: 0 0 15px #ff99cc;
+}
+
+#noBtn {
+    background-color: #888;
+    color: white;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+#message {
+    font-size: 20px;
+    margin-top: 20px;
+    color: #cc0066;
+}
+
+.meme {
+    margin-top: 15px;
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    color: pink;
+    animation: float 8s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh); opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1 id="question">Tommy 🥺, Will You Be My Valentine? 💖</h1>
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No ❌</button>
+    <div id="message"></div>
+</div>
+
+<!-- Soft Lofi Music -->
+<audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_9f9e5d67c6.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let noCount = 0;
+let musicStarted = false;
+
+function startMusic() {
+    if (!musicStarted) {
+        const music = document.getElementById("bgMusic");
+        music.volume = 0.2;
+        music.play();
+        mus
