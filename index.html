@@ -3,9 +3,6 @@
 <head>
 <title>Tommy, Will You Be My Valentine? 💖</title>
 
-<!-- Confetti Library -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
 <style>
 body {
     margin: 0;
@@ -17,6 +14,8 @@ body {
 
 .container {
     margin-top: 120px;
+    position: relative;
+    z-index: 2;
 }
 
 h1 {
@@ -54,9 +53,8 @@ button:hover {
     color: #cc0066;
 }
 
-.heart {
+.heart, .confetti {
     position: absolute;
-    color: pink;
     animation: float 6s linear infinite;
 }
 
@@ -80,7 +78,6 @@ button:hover {
     <div id="message"></div>
 </div>
 
-<!-- Background Music (starts on first click) -->
 <audio id="bgMusic" loop>
     <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_9f9e5d67c6.mp3" type="audio/mpeg">
 </audio>
@@ -123,18 +120,12 @@ document.getElementById("noBtn").onclick = function() {
 
 document.getElementById("yesBtn").onclick = function() {
     startMusic();
-
     document.getElementById("question").innerHTML = "YAYYYYY 💖 BEST DECISION EVER 💖";
     document.getElementById("message").innerHTML = "Tommy officially made the best decision 🎉💖";
 
-    confetti({
-        particleCount: 200,
-        spread: 120,
-        origin: { y: 0.6 }
-    });
+    launchConfetti();
 };
 
-/* Floating Hearts Background */
 function createHearts(){
     let heart = document.createElement("div");
     heart.className = "heart";
@@ -145,8 +136,17 @@ function createHearts(){
     setTimeout(() => heart.remove(), 6000);
 }
 
+function launchConfetti(){
+    for(let i=0; i<100; i++){
+        let conf = document.createElement("div");
+        conf.className = "confetti";
+        conf.innerHTML = "💖";
+        conf.style.left = Math.random()*100 + "vw";
+        conf.style.fontSize = "20px";
+        document.body.appendChild(conf);
+        setTimeout(() => conf.remove(), 4000);
+    }
+}
+
 setInterval(createHearts, 300);
 </script>
-
-</body>
-</html>
