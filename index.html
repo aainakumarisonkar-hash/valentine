@@ -43,17 +43,19 @@ button {
     color: white;
 }
 
-button:hover {
-    transform: scale(1.1);
-}
-
 #message {
     margin-top: 20px;
     font-size: 20px;
     color: #cc0066;
 }
 
-.heart, .confetti {
+.meme img {
+    margin-top: 15px;
+    width: 250px;
+    border-radius: 10px;
+}
+
+.heart {
     position: absolute;
     animation: float 6s linear infinite;
 }
@@ -61,10 +63,6 @@ button:hover {
 @keyframes float {
     0% { transform: translateY(100vh); opacity: 1; }
     100% { transform: translateY(-10vh); opacity: 0; }
-}
-
-.meme {
-    margin-top: 15px;
 }
 </style>
 </head>
@@ -78,51 +76,40 @@ button:hover {
     <div id="message"></div>
 </div>
 
-<audio id="bgMusic" loop>
-    <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_9f9e5d67c6.mp3" type="audio/mpeg">
-</audio>
-
 <script>
 let noCount = 0;
-let musicStarted = false;
+let yesSize = 18;
 
-function startMusic() {
-    if (!musicStarted) {
-        const music = document.getElementById("bgMusic");
-        music.volume = 0.2;
-        music.play();
-        musicStarted = true;
-    }
-}
+const memes = [
+    "https://i.imgflip.com/30b1gx.jpg",
+    "https://i.imgflip.com/1bij.jpg",
+    "https://i.imgflip.com/26am.jpg",
+    "https://i.imgflip.com/4t0m5.jpg"
+];
 
 document.getElementById("noBtn").onclick = function() {
-    startMusic();
     noCount++;
-    let msg = document.getElementById("message");
+    const msg = document.getElementById("message");
+    const yesBtn = document.getElementById("yesBtn");
 
-    if(noCount === 1){
-        msg.innerHTML = "Are you sure Tommy? 😏";
-    }
-    else if(noCount === 2){
-        msg.innerHTML = "Think carefully… 🤨";
-    }
-    else if(noCount === 3){
-        msg.innerHTML = "Rethink your life choices 😂";
-    }
-    else if(noCount === 4){
-        msg.innerHTML = "<div class='meme'><img src='https://i.imgflip.com/30b1gx.jpg' width='250'><br>Why would you say no?? 😭</div>";
-    }
-    else {
-        msg.innerHTML = "No button disabled. Press YES 💕";
-        document.getElementById("noBtn").style.display = "none";
-    }
+    let memeIndex = (noCount - 1) % memes.length;
+
+    msg.innerHTML = `
+        <div>Tommy… really? 😭</div>
+        <div class="meme">
+            <img src="${memes[memeIndex]}">
+        </div>
+    `;
+
+    // Make YES bigger every time
+    yesSize += 10;
+    yesBtn.style.fontSize = yesSize + "px";
+    yesBtn.style.padding = (yesSize + 10) + "px " + (yesSize + 20) + "px";
 };
 
 document.getElementById("yesBtn").onclick = function() {
-    startMusic();
     document.getElementById("question").innerHTML = "YAYYYYY 💖 BEST DECISION EVER 💖";
     document.getElementById("message").innerHTML = "Tommy officially made the best decision 🎉💖";
-
     launchConfetti();
 };
 
@@ -137,9 +124,9 @@ function createHearts(){
 }
 
 function launchConfetti(){
-    for(let i=0; i<100; i++){
+    for(let i=0; i<80; i++){
         let conf = document.createElement("div");
-        conf.className = "confetti";
+        conf.className = "heart";
         conf.innerHTML = "💖";
         conf.style.left = Math.random()*100 + "vw";
         conf.style.fontSize = "20px";
@@ -153,4 +140,3 @@ setInterval(createHearts, 300);
 
 </body>
 </html>
-
